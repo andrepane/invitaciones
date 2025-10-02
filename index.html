@@ -3,346 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Andrea & Javier - Invitación de boda</title>
+  <title>Cintia y Andrea - Invitación de boda</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --color-bg: #f9f6f1;
-      --color-accent: #d4b483;
-      --color-text: #4a4a4a;
-      --color-heading: #2f2f2f;
-      --max-width: 1100px;
-      --transition: all 0.6s ease;
-    }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: var(--color-bg);
-      color: var(--color-text);
-      line-height: 1.7;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-      border-radius: 12px;
-    }
-
-    h1, h2, h3, h4 {
-      font-family: 'Playfair Display', serif;
-      color: var(--color-heading);
-      letter-spacing: 0.04em;
-      margin: 0;
-    }
-
-    p {
-      margin: 0 0 1.2rem;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .container {
-      width: min(var(--max-width), 92%);
-      margin: 0 auto;
-    }
-
-    header {
-      background: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(249,246,241,0.9) 100%), url('https://images.unsplash.com/photo-1520854221050-0f4caff449fb?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-      padding: 8rem 0 6rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    header::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(255, 255, 255, 0.35);
-    }
-
-    header .content {
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-names {
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      text-transform: uppercase;
-      letter-spacing: 0.25em;
-      margin-bottom: 1rem;
-    }
-
-    .hero-date {
-      font-size: clamp(1rem, 2vw, 1.4rem);
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--color-accent);
-      margin-bottom: 2rem;
-    }
-
-    .intro-text {
-      font-size: 1.1rem;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
-    section {
-      padding: 5rem 0;
-    }
-
-    .details-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .detail-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-      border: 1px solid rgba(212, 180, 131, 0.15);
-      transition: transform 0.6s ease, box-shadow 0.6s ease;
-    }
-
-    .detail-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 30px 60px rgba(0,0,0,0.12);
-    }
-
-    .detail-card h3 {
-      margin-bottom: 1rem;
-      font-size: 1.4rem;
-    }
-
-    .map-wrapper {
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.08);
-    }
-
-    iframe {
-      width: 100%;
-      border: none;
-      min-height: 320px;
-    }
-
-    .countdown {
-      text-align: center;
-      background: #fff;
-      padding: 3rem 2rem;
-      border-radius: 20px;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.08);
-      border: 1px solid rgba(212, 180, 131, 0.18);
-    }
-
-    .countdown h2 {
-      margin-bottom: 2rem;
-    }
-
-    .countdown-timer {
-      display: flex;
-      justify-content: center;
-      gap: clamp(1rem, 6vw, 3rem);
-      flex-wrap: wrap;
-    }
-
-    .countdown-item {
-      min-width: 120px;
-    }
-
-    .countdown-item span {
-      display: block;
-    }
-
-    .countdown-number {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 600;
-      color: var(--color-heading);
-    }
-
-    .countdown-label {
-      text-transform: uppercase;
-      letter-spacing: 0.25em;
-      font-size: 0.75rem;
-      color: var(--color-accent);
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .gallery figure {
-      background: #fff;
-      border-radius: 18px;
-      overflow: hidden;
-      margin: 0;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-    }
-
-    .gallery figcaption {
-      padding: 1.5rem;
-      font-style: italic;
-      color: #6b6b6b;
-    }
-
-    .quote {
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto;
-      font-size: 1.4rem;
-      font-style: italic;
-      color: #6a6a6a;
-    }
-
-    .quote span {
-      display: block;
-      margin-top: 1rem;
-      font-size: 1rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--color-accent);
-    }
-
-    form {
-      background: #fff;
-      padding: 3rem 2.5rem;
-      border-radius: 18px;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.08);
-      border: 1px solid rgba(212, 180, 131, 0.18);
-      max-width: 540px;
-      margin: 0 auto;
-    }
-
-    label {
-      display: block;
-      font-weight: 500;
-      margin-bottom: 0.75rem;
-    }
-
-    input[type="text"], select {
-      width: 100%;
-      padding: 0.85rem 1rem;
-      border-radius: 12px;
-      border: 1px solid rgba(212, 180, 131, 0.4);
-      font-size: 1rem;
-      font-family: 'Poppins', sans-serif;
-      background: rgba(255,255,255,0.92);
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    input[type="text"]:focus, select:focus {
-      outline: none;
-      border-color: var(--color-accent);
-      box-shadow: 0 0 0 4px rgba(212, 180, 131, 0.2);
-    }
-
-    button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.9rem 2.6rem;
-      border-radius: 999px;
-      border: none;
-      background: linear-gradient(135deg, #d4b483, #f5d6a1);
-      color: #fff;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-top: 1.5rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 18px 30px rgba(212, 180, 131, 0.35);
-    }
-
-    .confirmation-message {
-      margin-top: 1.5rem;
-      font-weight: 500;
-      text-align: center;
-      color: var(--color-accent);
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    .confirmation-message.visible {
-      opacity: 1;
-    }
-
-    footer {
-      text-align: center;
-      padding: 3rem 0 2rem;
-      font-size: 0.85rem;
-      color: #8a8a8a;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 768px) {
-      header {
-        padding: 6rem 0 4rem;
-      }
-
-      .hero-names {
-        letter-spacing: 0.15em;
-      }
-
-      section {
-        padding: 4rem 0;
-      }
-
-      form {
-        padding: 2.5rem 1.75rem;
-      }
-
-      button {
-        width: 100%;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hero-date {
-        letter-spacing: 0.2em;
-      }
-
-      .detail-card {
-        padding: 1.6rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
     <div class="content container reveal">
-      <div class="hero-date">12 Julio 2026</div>
-      <h1 class="hero-names">Andrea &amp; Javier</h1>
+      <div class="hero-date">5 septiembre 2026</div>
+      <h1 class="hero-names">CINTIA Y ANDREA</h1>
       <p class="intro-text">Nos casamos y queremos celebrarlo contigo.</p>
     </div>
   </header>
@@ -353,22 +24,22 @@
         <div class="details-grid reveal">
           <div class="detail-card">
             <h3>Cuándo</h3>
-            <p>Domingo, 12 de julio de 2026</p>
-            <p>La ceremonia comenzará a las 17:00 h y continuará con la celebración.</p>
+            <p>Sábado, 5 de septiembre de 2026</p>
+            <p>La ceremonia comenzará a las 17:00 h y continuaremos celebrando hasta la noche.</p>
           </div>
           <div class="detail-card">
             <h3>Dónde</h3>
-            <p>Finca Los Olivos</p>
-            <p>Camino de la Encina 12, Madrid</p>
-            <p>Parking disponible. Recomendamos llegar con 20 minutos de antelación.</p>
+            <p>Cortijo Media Legua</p>
+            <p>Lucena, Córdoba</p>
+            <p>Habrá aparcamiento disponible. Te recomendamos llegar con 20 minutos de antelación.</p>
           </div>
           <div class="detail-card">
             <h3>Código de vestimenta</h3>
-            <p>Elegante de verano. Colores suaves y tejidos ligeros.</p>
+            <p>Totalmente libre y cómodo. Ven tal y como te sientas tú.</p>
           </div>
         </div>
         <div class="map-wrapper reveal">
-          <iframe title="Mapa de la finca" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.497393955862!2d-3.703790084603632!3d40.41677537936462!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422887c0e5c1e9%3A0x6d56b4215e7fa9a8!2sMadrid!5e0!3m2!1ses!2ses!4v1685641122334!5m2!1ses!2ses" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe title="Mapa de Cortijo Media Legua" src="https://www.google.com/maps?q=Cortijo%20Media%20Legua&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
     </section>
@@ -401,19 +72,19 @@
 
     <section id="gallery">
       <div class="container">
-        <h2 class="reveal" style="text-align:center; margin-bottom:3rem;">Momentos que queremos compartir</h2>
+        <h2 class="section-title reveal">Momentos que queremos compartir</h2>
         <div class="gallery">
           <figure class="reveal">
-            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" alt="Andrea y Javier en un paseo al atardecer">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" alt="Cintia y Andrea en un paseo al atardecer">
             <figcaption>Un paseo de verano, el inicio de todo.</figcaption>
           </figure>
           <figure class="reveal">
-            <img src="https://images.unsplash.com/photo-1520854221050-0f4caff449fb?auto=format&fit=crop&w=900&q=80" alt="Pareja disfrutando de una copa">
+            <img src="https://images.unsplash.com/photo-1520854221050-0f4caff449fb?auto=format&fit=crop&w=900&q=80" alt="Cintia y Andrea brindando en una cena especial">
             <figcaption>Brindamos por cada aventura compartida.</figcaption>
           </figure>
           <figure class="reveal">
-            <img src="https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&fit=crop&w=900&q=80" alt="Brindis en una boda elegante">
-            <figcaption>Y ahora queremos celebrar con quienes más queremos.</figcaption>
+            <img src="https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&fit=crop&w=900&q=80" alt="Celebración con amigas y amigos">
+            <figcaption>Ahora queremos celebrarlo con quienes más queremos.</figcaption>
           </figure>
         </div>
       </div>
@@ -427,13 +98,13 @@
 
     <section id="rsvp">
       <div class="container">
-        <h2 class="reveal" style="text-align:center; margin-bottom:2.5rem;">Confírmanos tu asistencia</h2>
+        <h2 class="section-title reveal">Confírmanos tu asistencia</h2>
         <form id="rsvp-form" class="reveal" novalidate>
-          <div class="form-group" style="margin-bottom:1.5rem;">
+          <div class="form-group">
             <label for="name">Nombre completo</label>
             <input type="text" id="name" name="name" placeholder="Tu nombre" required>
           </div>
-          <div class="form-group" style="margin-bottom:1.5rem;">
+          <div class="form-group">
             <label for="attendance">¿Vendrás?</label>
             <select id="attendance" name="attendance" required>
               <option value="">Selecciona una opción</option>
@@ -450,107 +121,10 @@
 
   <footer>
     <div class="container">
-      Con todo nuestro cariño, Andrea &amp; Javier · 2026
+      Con todo nuestro cariño, Cintia &amp; Andrea · 2026
     </div>
   </footer>
 
-  <script type="module">
-    // Importa los módulos necesarios de Firebase v9
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
-    import { getDatabase, ref, push, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js';
-
-    // TODO: Reemplaza los valores de la configuración con los de tu proyecto Firebase
-    const firebaseConfig = {
-      apiKey: 'TU_API_KEY',
-      authDomain: 'TU_PROYECTO.firebaseapp.com',
-      databaseURL: 'https://TU_PROYECTO.firebaseio.com',
-      projectId: 'TU_PROYECTO',
-      storageBucket: 'TU_PROYECTO.appspot.com',
-      messagingSenderId: 'NUMERO_EMISOR',
-      appId: 'TU_APP_ID'
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
-
-    const form = document.getElementById('rsvp-form');
-    const confirmationMessage = document.getElementById('confirmation-message');
-
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const name = form.name.value.trim();
-      const attendance = form.attendance.value;
-
-      if (!name || !attendance) {
-        confirmationMessage.textContent = 'Por favor, completa todos los campos.';
-        confirmationMessage.classList.add('visible');
-        confirmationMessage.style.color = '#c26565';
-        return;
-      }
-
-      try {
-        const rsvpListRef = ref(database, 'rsvps');
-        await push(rsvpListRef, {
-          name,
-          attendance,
-          timestamp: serverTimestamp()
-        });
-
-        confirmationMessage.textContent = '¡Gracias por confirmar, nos hace mucha ilusión!';
-        confirmationMessage.classList.add('visible');
-        confirmationMessage.style.color = 'var(--color-accent)';
-        form.reset();
-      } catch (error) {
-        console.error(error);
-        confirmationMessage.textContent = 'Hubo un error al registrar tu respuesta. Intenta nuevamente en unos instantes.';
-        confirmationMessage.classList.add('visible');
-        confirmationMessage.style.color = '#c26565';
-      }
-    });
-
-    // Animaciones suaves al hacer scroll
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.1
-    });
-
-    reveals.forEach((element) => observer.observe(element));
-
-    // Contador regresivo
-    const targetDate = new Date('2026-07-12T17:00:00');
-
-    function updateCountdown() {
-      const now = new Date();
-      const difference = targetDate - now;
-
-      if (difference <= 0) {
-        document.getElementById('days').textContent = '0';
-        document.getElementById('hours').textContent = '0';
-        document.getElementById('minutes').textContent = '0';
-        document.getElementById('seconds').textContent = '0';
-        return;
-      }
-
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-      document.getElementById('days').textContent = days.toString().padStart(2, '0');
-      document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-      document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-      document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-    }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-  </script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
