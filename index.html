@@ -10,102 +10,108 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav class="site-nav" aria-label="Secciones de la invitación">
+<nav class="site-nav" aria-label="Secciones de la invitación" data-i18n-attr="aria-label:nav.ariaLabel">
     <div class="nav-container">
       <span class="nav-brand">Cintia &amp; Andrea</span>
-      <div class="nav-links">
-        <a href="#detalles">detalles</a>
-        <a href="#agenda">agenda</a>
-        <a href="#rsvp">formulario</a>
+      <div class="nav-actions">
+        <div class="nav-links">
+          <a href="#detalles" data-i18n="nav.details">detalles</a>
+          <a href="#agenda" data-i18n="nav.agenda">agenda</a>
+          <a href="#rsvp" data-i18n="nav.rsvp">formulario</a>
+        </div>
+        <div class="language-switcher" role="group" aria-label="Selecciona idioma" data-i18n-attr="aria-label:language.switchAria">
+          <button type="button" class="lang-button is-active" data-language="es" aria-pressed="true">ES</button>
+          <button type="button" class="lang-button" data-language="it" aria-pressed="false">IT</button>
+        </div>
       </div>
     </div>
   </nav>
 
   <header class="hero" id="inicio">
     <div class="hero-content">
-      <p class="hero-date">5 · septiembre · 2026 · vera, almería</p>
-      <h1 class="hero-title">El anti-Bodorrio</h1>
-      <p class="hero-sub">Cero artificios, todo lujo (y buena comida).</p>
+      <p class="hero-date" data-i18n="hero.date">5 · septiembre · 2026 · vera, almería</p>
+      <h1 class="hero-title" data-i18n="hero.title">El anti-Bodorrio</h1>
+      <p class="hero-sub" data-i18n="hero.subtitle">Cero artificios, todo lujo (y buena comida).</p>
     </div>
   </header>
 
   <main>
     <section id="detalles" class="section">
       <div class="section-header">
-        <h2>detalles prácticos</h2>
-        <p>todo lo necesario para llegar puntuales (un día antes).</p>
+        <h2 data-i18n="details.title">detalles prácticos</h2>
+        <p data-i18n="details.subtitle">todo lo necesario para llegar puntuales (un día antes).</p>
       </div>
       <div class="details-grid">
         <article class="detail-card">
-          <h3>cuándo</h3>
-          <p>Del 4 al 6 de septiembre de 2026. La ceremonia es el sábado a partir de las 18:00.</p>
+          <h3 data-i18n="details.when.title">cuándo</h3>
+          <p data-i18n="details.when.body">Del 4 al 6 de septiembre de 2026. La ceremonia es el sábado a partir de las 18:00.</p>
         </article>
         <article class="detail-card">
-          <h3>dónde</h3>
-          <p>Cortijo Media Legua · Vera, Almería.</p>
-          <p>Grandes habitaciones, piscina privada y hasta pista de pádel.</p>
+          <h3 data-i18n="details.where.title">dónde</h3>
+          <p data-i18n="details.where.body">Cortijo Media Legua · Vera, Almería.</p>
+          <p data-i18n="details.where.extra">Grandes habitaciones, piscina privada y hasta pista de pádel.</p>
         </article>
         <article class="detail-card">
-          <h3>qué llevar</h3>
-          <p>Bañador, ropa ligera para el día y algo más formal para la noche.</p>
+          <h3 data-i18n="details.what.title">qué llevar</h3>
+          <p data-i18n="details.what.body">Bañador, ropa ligera para el día y algo más formal para la noche.</p>
         </article>
       </div>
-      <div class="map-wrapper" aria-label="Mapa de la localización">
-        <iframe title="Mapa de Cortijo Media Legua" src="https://www.google.com/maps?q=Cortijo%20Media%20Legua&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="map-wrapper" aria-label="Mapa de la localización" data-i18n-attr="aria-label:map.ariaLabel">
+        <iframe title="Mapa de Cortijo Media Legua" data-i18n-attr="title:map.title" src="https://www.google.com/maps?q=Cortijo%20Media%20Legua&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </section>
 
     <section id="agenda" class="section">
       <div class="section-header">
-        <h2>agenda del fin de semana</h2>
+        <h2 data-i18n="agenda.title">agenda del fin de semana</h2>
       </div>
       <div class="agenda-grid">
         <article class="agenda-item">
-          <h3>viernes</h3>
-          <p>Check-in desde las 15:00. Cena en compañía y sobremesa para ponernos al día.</p>
+          <h3 data-i18n="agenda.friday.title">viernes</h3>
+          <p data-i18n="agenda.friday.body">Check-in desde las 15:00. Cena en compañía y sobremesa para ponernos al día.</p>
         </article>
         <article class="agenda-item">
-          <h3>sábado</h3>
-          <p>Mañana entre piscina y preparativos. A las 18:00 pequeña ceremonia en familia. Después cena y música.</p>
+          <h3 data-i18n="agenda.saturday.title">sábado</h3>
+          <p data-i18n="agenda.saturday.body">Mañana entre piscina y preparativos. A las 18:00 pequeña ceremonia en familia. Después cena y música.</p>
         </article>
         <article class="agenda-item">
-          <h3>domingo</h3>
-          <p>Desayuno tranquilo, despedidas y salida a las 11:00.</p>
+          <h3 data-i18n="agenda.sunday.title">domingo</h3>
+          <p data-i18n="agenda.sunday.body">Desayuno tranquilo, despedidas y salida a las 11:00.</p>
         </article>
       </div>
     </section>
 
     <section id="rsvp" class="section">
       <div class="section-header">
-        <h2>asistencia</h2>
-        <p>¿vienes? dilo aquí y te guardamos sitio.</p>
+        <h2 data-i18n="form.title">asistencia</h2>
+        <p data-i18n="form.description">¿vienes? dilo aquí y te guardamos sitio.</p>
       </div>
       <form id="rsvp-form" novalidate>
         <div class="form-group">
-          <label for="name">nombre</label>
+          <label for="name" data-i18n="form.labels.name">nombre</label>
           <input type="text" id="name" name="name" autocomplete="name" required>
         </div>
         <div class="form-group">
-          <label for="guests">Número Personas</label>
+          <label for="guests" data-i18n="form.labels.guests">Número Personas</label>
           <input type="number" id="guests" name="guests" min="1" max="6" inputmode="numeric" required>
         </div>
         <input type="hidden" id="attendance" name="attendance">
         <div class="form-actions">
-          <button type="submit" class="btn primary" data-response="Sí">confirmar asistencia</button>
-          <button type="submit" class="btn ghost" data-response="No">no puedo</button>
+          <button type="submit" class="btn primary" data-response="yes" data-i18n="form.buttons.confirm">confirmar asistencia</button>
+          <button type="submit" class="btn ghost" data-response="no" data-i18n="form.buttons.decline">no puedo</button>
         </div>
         <p id="confirmation-message" class="confirmation-message" role="status" aria-live="polite"></p>
-        <button type="button" id="reset-response" class="btn link" data-skip-disable="true" hidden>
+        <button type="button" id="reset-response" class="btn link" data-skip-disable="true" hidden data-i18n="form.buttons.reset">
           editar respuesta
         </button>
       </form>
     </section>
 
-   
+
   </main>
 
   <footer class="site-footer">
-    <p>cintia &amp; andrea · 2026 · nos vemos allí.</p>
+    <p data-i18n="footer.text">cintia &amp; andrea · 2026 · nos vemos allí.</p>
   </footer>
 
 <script type="module">

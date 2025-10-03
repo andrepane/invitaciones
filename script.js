@@ -5,9 +5,197 @@ const resetButton = document.getElementById('reset-response');
 const submitButtons = form ? Array.from(form.querySelectorAll('button[type="submit"]')) : [];
 const formControls = form ? Array.from(form.querySelectorAll('input, button')) : [];
 const RSVP_STORAGE_KEY = 'rsvp:andrea-boda';
+const LANGUAGE_STORAGE_KEY = 'invite:language';
 
 const database = window.DB;
 const { ref, push } = window.firebaseRTDB || {};
+const languageButtons = document.querySelectorAll('.lang-button[data-language]');
+
+const translations = {
+  es: {
+    'head.title': 'Cintia & Andrea · sí, nos casamos.',
+    'nav.ariaLabel': 'Secciones de la invitación',
+    'nav.details': 'detalles',
+    'nav.agenda': 'agenda',
+    'nav.rsvp': 'formulario',
+    'language.switchAria': 'Selecciona idioma',
+    'hero.date': '5 · septiembre · 2026 · vera, almería',
+    'hero.title': 'El anti-Bodorrio',
+    'hero.subtitle': 'Cero artificios, todo lujo (y buena comida).',
+    'details.title': 'detalles prácticos',
+    'details.subtitle': 'todo lo necesario para llegar puntuales (un día antes).',
+    'details.when.title': 'cuándo',
+    'details.when.body': 'Del 4 al 6 de septiembre de 2026. La ceremonia es el sábado a partir de las 18:00.',
+    'details.where.title': 'dónde',
+    'details.where.body': 'Cortijo Media Legua · Vera, Almería.',
+    'details.where.extra': 'Grandes habitaciones, piscina privada y hasta pista de pádel.',
+    'details.what.title': 'qué llevar',
+    'details.what.body': 'Bañador, ropa ligera para el día y algo más formal para la noche.',
+    'map.ariaLabel': 'Mapa de la localización',
+    'map.title': 'Mapa de Cortijo Media Legua',
+    'agenda.title': 'agenda del fin de semana',
+    'agenda.friday.title': 'viernes',
+    'agenda.friday.body': 'Check-in desde las 15:00. Cena en compañía y sobremesa para ponernos al día.',
+    'agenda.saturday.title': 'sábado',
+    'agenda.saturday.body': 'Mañana entre piscina y preparativos. A las 18:00 pequeña ceremonia en familia. Después cena y música.',
+    'agenda.sunday.title': 'domingo',
+    'agenda.sunday.body': 'Desayuno tranquilo, despedidas y salida a las 11:00.',
+    'form.title': 'asistencia',
+    'form.description': '¿vienes? dilo aquí y te guardamos sitio.',
+    'form.labels.name': 'nombre',
+    'form.labels.guests': 'Número Personas',
+    'form.buttons.confirm': 'confirmar asistencia',
+    'form.buttons.decline': 'no puedo',
+    'form.buttons.reset': 'editar respuesta',
+    'footer.text': 'cintia & andrea · 2026 · nos vemos allí.',
+    'messages.updateResponse': 'Actualiza tu respuesta y vuelve a enviarla.',
+    'messages.nameRequired': 'Necesitamos tu nombre para confirmar.',
+    'messages.guestsRequired': 'Indica cuántas personas venís (mínimo 1).',
+    'messages.selectOption': 'Selecciona una opción para confirmar.',
+    'messages.serviceUnavailable': 'No se pudo conectar con el servicio. Inténtalo más tarde.',
+    'messages.saving': 'Guardando tu respuesta...',
+    'messages.thankYouYes': '¡Gracias por confirmar!',
+    'messages.thankYouNo': 'Una pena, te echaremos de menos.',
+    'messages.saveError': 'No hemos podido guardar tu respuesta. Por favor, inténtalo de nuevo dentro de un momento.',
+    'messages.responseExists': 'Ya tenemos tu respuesta registrada. ¡Gracias!',
+    'messages.firebaseUnavailable': 'Firebase RTDB no está disponible.'
+  },
+  it: {
+    'head.title': 'Cintia & Andrea · sì, ci sposiamo.',
+    "nav.ariaLabel": "Sezioni dell'invito",
+    'nav.details': 'dettagli',
+    'nav.agenda': 'programma',
+    'nav.rsvp': 'modulo',
+    'language.switchAria': 'Seleziona lingua',
+    'hero.date': '5 · settembre · 2026 · vera, almería',
+    "hero.title": "L'anti-matrimonio",
+    'hero.subtitle': 'Zero artifici, tutto lusso (e buon cibo).',
+    'details.title': 'dettagli pratici',
+    'details.subtitle': 'tutto il necessario per arrivare puntuali (un giorno prima).',
+    'details.when.title': 'quando',
+    'details.when.body': 'Dal 4 al 6 settembre 2026. La cerimonia sarà sabato dalle 18:00.',
+    'details.where.title': 'dove',
+    'details.where.body': 'Cortijo Media Legua · Vera, Almería.',
+    'details.where.extra': 'Camere spaziose, piscina privata e persino campo da padel.',
+    'details.what.title': 'cosa portare',
+    'details.what.body': 'Costume da bagno, abiti leggeri per il giorno e qualcosa di più elegante per la sera.',
+    'map.ariaLabel': 'Mappa della posizione',
+    'map.title': 'Mappa del Cortijo Media Legua',
+    'agenda.title': 'programma del fine settimana',
+    "agenda.friday.title": "venerdì",
+    'agenda.friday.body': 'Check-in dalle 15:00. Cena insieme e chiacchiere per aggiornarci.',
+    'agenda.saturday.title': 'sabato',
+    'agenda.saturday.body': 'Mattina tra piscina e preparativi. Alle 18:00 piccola cerimonia in famiglia. Poi cena e musica.',
+    'agenda.sunday.title': 'domenica',
+    'agenda.sunday.body': 'Colazione tranquilla, saluti e partenza alle 11:00.',
+    'form.title': 'presenza',
+    'form.description': 'Ci sarai? Diccelo qui e ti riserviamo un posto.',
+    'form.labels.name': 'nome',
+    'form.labels.guests': 'Numero persone',
+    'form.buttons.confirm': 'conferma partecipazione',
+    'form.buttons.decline': 'non posso',
+    'form.buttons.reset': 'modifica risposta',
+    'footer.text': 'cintia & andrea · 2026 · ci vediamo lì.',
+    'messages.updateResponse': 'Aggiorna la tua risposta e inviala di nuovo.',
+    'messages.nameRequired': 'Ci serve il tuo nome per confermare.',
+    'messages.guestsRequired': 'Indica quante persone venite (minimo 1).',
+    "messages.selectOption": "Scegli un'opzione per confermare.",
+    'messages.serviceUnavailable': 'Impossibile connettersi al servizio. Riprova più tardi.',
+    'messages.saving': 'Stiamo salvando la tua risposta...',
+    'messages.thankYouYes': 'Grazie per la conferma!',
+    'messages.thankYouNo': 'Che peccato, ci mancherai.',
+    'messages.saveError': 'Non siamo riusciti a salvare la tua risposta. Riprova tra qualche istante.',
+    'messages.responseExists': 'Abbiamo già registrato la tua risposta. Grazie!',
+    'messages.firebaseUnavailable': 'Firebase RTDB non è disponibile.'
+  }
+};
+
+let currentLanguage = 'es';
+let currentMessageKey = null;
+
+function t(key) {
+  return translations[currentLanguage]?.[key] ?? translations.es[key] ?? key;
+}
+
+function translateElement(element) {
+  const textKey = element.dataset.i18n;
+  if (textKey) {
+    const translation = t(textKey);
+    if (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) {
+      element.placeholder = translation;
+    } else {
+      element.textContent = translation;
+    }
+  }
+
+  const attrMap = element.dataset.i18nAttr;
+  if (attrMap) {
+    attrMap.split(';').forEach((mapping) => {
+      const [attribute, attributeKey] = mapping.split(':').map((part) => part.trim());
+      if (!attribute || !attributeKey) return;
+      const translation = t(attributeKey);
+      element.setAttribute(attribute, translation);
+    });
+  }
+}
+
+function applyTranslations() {
+  const elements = document.querySelectorAll('[data-i18n], [data-i18n-attr]');
+  elements.forEach((element) => translateElement(element));
+}
+
+function updateLanguageButtons() {
+  languageButtons.forEach((button) => {
+    const isActive = button.dataset.language === currentLanguage;
+    button.classList.toggle('is-active', isActive);
+    button.setAttribute('aria-pressed', String(isActive));
+  });
+}
+
+function showMessage(messageKey) {
+  if (!confirmationMessage) return;
+  currentMessageKey = messageKey;
+  const messageText = messageKey ? t(messageKey) : '';
+  confirmationMessage.textContent = messageText;
+  confirmationMessage.classList.toggle('visible', Boolean(messageText));
+}
+
+function setLanguage(language, { persist = true } = {}) {
+  if (!translations[language]) return;
+  const previousMessageKey = currentMessageKey;
+  currentLanguage = language;
+  if (persist) {
+    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+  }
+  document.documentElement.lang = language;
+  document.title = t('head.title');
+  applyTranslations();
+  updateLanguageButtons();
+  if (previousMessageKey) {
+    showMessage(previousMessageKey);
+  } else {
+    showMessage(null);
+  }
+}
+
+function initLanguage() {
+  const storedLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+  if (storedLanguage && translations[storedLanguage]) {
+    setLanguage(storedLanguage, { persist: false });
+  } else {
+    setLanguage(currentLanguage, { persist: false });
+  }
+
+  languageButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const { language } = button.dataset;
+      if (!language || language === currentLanguage) return;
+      setLanguage(language);
+    });
+  });
+}
+
+initLanguage();
 
 let formLocked = false;
 
@@ -33,12 +221,6 @@ function setSubmittingState(isSubmitting) {
   });
 }
 
-function showMessage(message) {
-  if (!confirmationMessage) return;
-  confirmationMessage.textContent = message;
-  confirmationMessage.classList.toggle('visible', Boolean(message));
-}
-
 function showResetButton() {
   if (!resetButton) return;
   resetButton.hidden = false;
@@ -49,12 +231,10 @@ function hideResetButton() {
   resetButton.hidden = true;
 }
 
-function lockFormWithMessage(message, { allowReset = true } = {}) {
+function lockFormWithMessage(messageKey, { allowReset = true } = {}) {
   formLocked = true;
   toggleControlsDisabled(true);
-  if (message) {
-    showMessage(message);
-  }
+  showMessage(messageKey || null);
   if (allowReset) {
     showResetButton();
   }
@@ -65,7 +245,7 @@ function unlockForm() {
   toggleControlsDisabled(false);
   setSubmittingState(false);
   form?.reset();
-  showMessage('Actualiza tu respuesta y vuelve a enviarla.');
+  showMessage('messages.updateResponse');
   hideResetButton();
   const firstInput = form?.querySelector('input:not([type="hidden"])');
   firstInput?.focus();
@@ -73,12 +253,12 @@ function unlockForm() {
 
 function validateForm(name, guestsValue) {
   if (!name) {
-    return 'Necesitamos tu nombre para confirmar.';
+    return 'messages.nameRequired';
   }
 
   const guestsNumber = Number(guestsValue);
   if (!Number.isFinite(guestsNumber) || guestsNumber < 1) {
-    return 'Indica cuántas personas venís (mínimo 1).';
+    return 'messages.guestsRequired';
   }
 
   return null;
@@ -86,14 +266,14 @@ function validateForm(name, guestsValue) {
 
 if (form) {
   if (!database || !ref || !push) {
-    console.error('Firebase RTDB no está disponible.');
+    console.error(t('messages.firebaseUnavailable'));
   }
 
   hideResetButton();
 
   const storedResponse = window.localStorage.getItem(RSVP_STORAGE_KEY);
   if (storedResponse) {
-    lockFormWithMessage('Ya tenemos tu respuesta registrada. ¡Gracias!');
+    lockFormWithMessage('messages.responseExists');
   }
 
   if (resetButton) {
@@ -113,10 +293,10 @@ if (form) {
     const submitter = event.submitter;
     const response = submitter?.dataset.response || '';
     if (!response) {
-      showMessage('Selecciona una opción para confirmar.');
+      showMessage('messages.selectOption');
       return;
     }
-    const attending = response === 'Sí';
+    const attending = response === 'yes';
     const name = form.name.value.trim();
     const guestsValue = form.guests.value.trim();
 
@@ -131,12 +311,12 @@ if (form) {
     }
 
     if (!database || !ref || !push) {
-      showMessage('No se pudo conectar con el servicio. Inténtalo más tarde.');
+      showMessage('messages.serviceUnavailable');
       return;
     }
 
     setSubmittingState(true);
-    showMessage('Guardando tu respuesta...');
+    showMessage('messages.saving');
 
     const guestsNumber = Number(guestsValue);
 
@@ -150,16 +330,16 @@ if (form) {
         source: 'invite'
       });
 
-      const thankYouMessage = attending
-        ? '¡Gracias por confirmar!'
-        : 'Una pena, te echaremos de menos.';
+      const thankYouMessageKey = attending
+        ? 'messages.thankYouYes'
+        : 'messages.thankYouNo';
 
-      lockFormWithMessage(thankYouMessage);
+      lockFormWithMessage(thankYouMessageKey);
       window.localStorage.setItem(RSVP_STORAGE_KEY, 'done');
     } catch (error) {
       console.error(error);
       setSubmittingState(false);
-      showMessage('No hemos podido guardar tu respuesta. Por favor, inténtalo de nuevo dentro de un momento.');
+      showMessage('messages.saveError');
     }
   });
 }
