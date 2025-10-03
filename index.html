@@ -3,126 +3,131 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cintia y Andrea - Invitación de boda</title>
+  <title>Cintia &amp; Andrea · sí, nos casamos.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <div class="content container reveal">
-      <div class="hero-date">5 septiembre 2026</div>
-      <h1 class="hero-names">CINTIA Y ANDREA</h1>
-      <p class="intro-text">Nos casamos y queremos celebrarlo contigo.</p>
+  <nav class="site-nav" aria-label="Secciones de la invitación">
+    <div class="nav-container">
+      <span class="nav-brand">Cintia &amp; Andrea</span>
+      <div class="nav-links">
+        <a href="#detalles">detalles</a>
+        <a href="#agenda">agenda</a>
+        <a href="#rsvp">rsvp</a>
+        <a href="#faq">faq</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="inicio">
+    <div class="hero-content">
+      <p class="hero-date">5 · septiembre · 2026 · vera, almería</p>
+      <h1 class="hero-title">sí, nos casamos.</h1>
+      <p class="hero-sub">prometemos que dura menos que una serie de netflix.</p>
     </div>
   </header>
 
   <main>
-    <section id="details">
-      <div class="container">
-        <div class="details-grid reveal">
-          <div class="detail-card">
-            <h3>Cuándo</h3>
-            <p>Sábado, 5 de septiembre de 2026</p>
-            <p>Celebraremos juntos durante todo el fin de semana, desde el viernes hasta el domingo. La ceremonia tendrá lugar el sábado a las 17:00 h y continuaremos la fiesta hasta la noche.</p>
-          </div>
-          <div class="detail-card">
-            <h3>Dónde</h3>
-            <p>Cortijo Media Legua</p>
-            <p>Vera, Almería</p>
-            <p>Habrá habitaciones de lujo y piscina privada.</p>
-          </div>
-          <div class="detail-card">
-            <h3>Código de vestimenta</h3>
-            <p>Totalmente libre y cómodo. Ven tal y como te sientas tú.</p>
-          </div>
-        </div>
-        <div class="map-wrapper reveal">
-          <iframe title="Mapa de Cortijo Media Legua" src="https://www.google.com/maps?q=Cortijo%20Media%20Legua&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
+    <section id="detalles" class="section">
+      <div class="section-header">
+        <h2>detalles prácticos</h2>
+        <p>todo lo necesario para llegar puntuales y sin dramas.</p>
+      </div>
+      <div class="details-grid">
+        <article class="detail-card">
+          <h3>cuándo</h3>
+          <p>del 4 al 6 de septiembre. la ceremonia es el sábado a las 17:00.</p>
+        </article>
+        <article class="detail-card">
+          <h3>dónde</h3>
+          <p>cortijo media legua · vera, almería.</p>
+          <p>habitaciones cómodas, piscina seria y café decente.</p>
+        </article>
+        <article class="detail-card">
+          <h3>qué llevar</h3>
+          <p>bañador, ropa ligera para el sol y ganas de charlar hasta tarde.</p>
+        </article>
+      </div>
+      <div class="map-wrapper" aria-label="Mapa de la localización">
+        <iframe title="Mapa de Cortijo Media Legua" src="https://www.google.com/maps?q=Cortijo%20Media%20Legua&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </section>
 
-    <section id="countdown">
-      <div class="container">
-        <div class="countdown reveal">
-          <h2>Cuenta atrás para el gran día</h2>
-          <div class="countdown-timer" aria-live="polite">
-            <div class="countdown-item">
-              <span class="countdown-number" id="days">0</span>
-              <span class="countdown-label">Días</span>
-            </div>
-            <div class="countdown-item">
-              <span class="countdown-number" id="hours">0</span>
-              <span class="countdown-label">Horas</span>
-            </div>
-            <div class="countdown-item">
-              <span class="countdown-number" id="minutes">0</span>
-              <span class="countdown-label">Minutos</span>
-            </div>
-            <div class="countdown-item">
-              <span class="countdown-number" id="seconds">0</span>
-              <span class="countdown-label">Segundos</span>
-            </div>
-          </div>
+    <section id="agenda" class="section">
+      <div class="section-header">
+        <h2>agenda del fin de semana</h2>
+        <p>fin de semana completo: viernes a domingo. la ceremonia es el sábado a las 17:00.</p>
+      </div>
+      <div class="agenda-grid">
+        <article class="agenda-item">
+          <h3>viernes</h3>
+          <p>check-in desde las 17:00. cena ligera y sobremesa para ponernos al día.</p>
+        </article>
+        <article class="agenda-item">
+          <h3>sábado</h3>
+          <p>mañana libre con piscina. a las 17:00 ceremonia sin discursos eternos. después comida seria y música hasta cuando aguantes.</p>
+        </article>
+        <article class="agenda-item">
+          <h3>domingo</h3>
+          <p>desayuno tranquilo, despedidas sin lágrimas y salida a mediodía.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="rsvp" class="section">
+      <div class="section-header">
+        <h2>rsvp</h2>
+        <p>¿vienes? dilo aquí y te guardamos sitio.</p>
+      </div>
+      <form id="rsvp-form" novalidate>
+        <div class="form-group">
+          <label for="name">nombre</label>
+          <input type="text" id="name" name="name" autocomplete="name" required>
         </div>
-      </div>
-    </section>
-
-    <section id="gallery">
-      <div class="container">
-        <h2 class="section-title reveal">Momentos que queremos compartir</h2>
-        <div class="gallery">
-          <figure class="reveal">
-            <img src="IMG_6701.jpg" alt="Cintia y Andrea besándose en un viñedo al atardecer">
-            <figcaption>Un atardecer en el viñedo donde dijimos sí al futuro.</figcaption>
-          </figure>
-          <figure class="reveal">
-            <img src="IMG_6704.jpg" alt="Primer plano del anillo de compromiso con Cintia y Andrea de fondo sonriendo">
-            <figcaption>El momento en el que compartimos la noticia con el mundo.</figcaption>
-          </figure>
-          <figure class="reveal">
-            <img src="IMG_6706.jpg" alt="Cintia mostrando el anillo mientras se besa con Andrea">
-            <figcaption>Prometimos seguir escribiendo nuestra historia juntos.</figcaption>
-          </figure>
+        <div class="form-group">
+          <label for="guests">personas en tu grupo</label>
+          <input type="number" id="guests" name="guests" min="1" max="6" inputmode="numeric" required>
         </div>
-      </div>
+        <input type="hidden" id="attendance" name="attendance">
+        <div class="form-actions">
+          <button type="submit" class="btn primary" data-response="Sí">confirmar asistencia</button>
+          <button type="submit" class="btn ghost" data-response="No">no puedo</button>
+        </div>
+        <p id="confirmation-message" class="confirmation-message" role="status" aria-live="polite"></p>
+      </form>
     </section>
 
-    <section id="quote">
-      <div class="container">
-        <p class="quote reveal">“El amor no mira con los ojos, sino con el alma.” <span>William Shakespeare</span></p>
+    <section id="faq" class="section">
+      <div class="section-header">
+        <h2>cómo llegar &amp; faq</h2>
+        <p>respuestas rápidas para que no tengas que escribirnos a las 23:59.</p>
       </div>
-    </section>
-
-    <section id="rsvp">
-      <div class="container">
-        <h2 class="section-title reveal">Confírmanos tu asistencia</h2>
-        <form id="rsvp-form" class="reveal" novalidate>
-          <div class="form-group">
-            <label for="name">Nombre completo</label>
-            <input type="text" id="name" name="name" placeholder="Tu nombre" required>
-          </div>
-          <div class="form-group">
-            <label for="attendance">¿Vendrás?</label>
-            <select id="attendance" name="attendance" required>
-              <option value="">Selecciona una opción</option>
-              <option value="Sí">Sí, allí estaré</option>
-              <option value="No">No podré asistir</option>
-            </select>
-          </div>
-          <button type="submit">Enviar confirmación</button>
-          <p id="confirmation-message" class="confirmation-message" role="status" aria-live="polite"></p>
-        </form>
+      <div class="faq-grid">
+        <article class="faq-item">
+          <h3>transporte</h3>
+          <p>desde almería capital hay coche en 50 minutos. si necesitas compartir, avísanos y coordinamos.</p>
+        </article>
+        <article class="faq-item">
+          <h3>dress code</h3>
+          <p>dress code: ven cómodo y con ganas de comer.</p>
+        </article>
+        <article class="faq-item">
+          <h3>niños</h3>
+          <p>bienvenidos. avisa en el formulario para preparar tronas y meriendas.</p>
+        </article>
+        <article class="faq-item">
+          <h3>alergias</h3>
+          <p>cuéntanoslo al confirmar asistencia y lo organizamos con la cocina.</p>
+        </article>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="container">
-      Con todo nuestro cariño, Cintia &amp; Andrea · 2026
-    </div>
+  <footer class="site-footer">
+    <p>cintia &amp; andrea · 2026 · nos vemos allí.</p>
   </footer>
 
   <script type="module" src="script.js"></script>
