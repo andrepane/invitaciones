@@ -1,6 +1,7 @@
 const form = document.getElementById('rsvp-form');
 const confirmationMessage = document.getElementById('confirmation-message');
 const attendanceInput = document.getElementById('attendance');
+const resetButton = document.getElementById('reset-response');
 const submitButtons = form ? Array.from(form.querySelectorAll('button[type="submit"]')) : [];
 const formControls = form ? Array.from(form.querySelectorAll('input, button')) : [];
 const RSVP_STORAGE_KEY = 'rsvp:andrea-boda';
@@ -14,6 +15,7 @@ function toggleControlsDisabled(disabled) {
   if (!form) return;
   formControls.forEach((control) => {
     if (control.type === 'hidden') return;
+    if (control.dataset?.skipDisable === 'true') return;
     control.disabled = disabled;
   });
   form.classList.toggle('is-disabled', disabled);
@@ -34,14 +36,39 @@ function setSubmittingState(isSubmitting) {
 function showMessage(message) {
   if (!confirmationMessage) return;
   confirmationMessage.textContent = message;
+  confirmationMessage.classList.toggle('visible', Boolean(message));
 }
 
-function lockFormWithMessage(message) {
+function showResetButton() {
+  if (!resetButton) return;
+  resetButton.hidden = false;
+}
+
+function hideResetButton() {
+  if (!resetButton) return;
+  resetButton.hidden = true;
+}
+
+function lockFormWithMessage(message, { allowReset = true } = {}) {
   formLocked = true;
   toggleControlsDisabled(true);
   if (message) {
     showMessage(message);
   }
+  if (allowReset) {
+    showResetButton();
+  }
+}
+
+function unlockForm() {
+  formLocked = false;
+  toggleControlsDisabled(false);
+  setSubmittingState(false);
+  form?.reset();
+  showMessage('Actualiza tu respuesta y vuelve a enviarla.');
+  hideResetButton();
+  const firstInput = form?.querySelector('input:not([type="hidden"])');
+  firstInput?.focus();
 }
 
 function validateForm(name, guestsValue) {
@@ -62,9 +89,18 @@ if (form) {
     console.error('Firebase RTDB no está disponible.');
   }
 
+  hideResetButton();
+
   const storedResponse = window.localStorage.getItem(RSVP_STORAGE_KEY);
   if (storedResponse) {
     lockFormWithMessage('Ya tenemos tu respuesta registrada. ¡Gracias!');
+  }
+
+  if (resetButton) {
+    resetButton.addEventListener('click', () => {
+      window.localStorage.removeItem(RSVP_STORAGE_KEY);
+      unlockForm();
+    });
   }
 
   form.addEventListener('submit', async (event) => {
