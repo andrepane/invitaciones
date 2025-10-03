@@ -1,10 +1,11 @@
 :root {
-  --color-bg: #f3f3f0;
+  --color-bg: #fdf8f1;
   --color-text: #1f1f1d;
   --color-surface: #ffffff;
   --color-muted: #6f716d;
-  --color-accent: #8c7b56;
-  --color-accent-strong: #6f6040;
+  --color-accent: #f28f79;
+  --color-accent-strong: #d87267;
+  --color-accent-soft: rgba(242, 143, 121, 0.12);
   --font-heading: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --max-width: 960px;
@@ -33,7 +34,8 @@ html {
 body {
   margin: 0;
   font-family: var(--font-body);
-  background: var(--color-bg);
+  background: radial-gradient(circle at top right, rgba(242, 143, 121, 0.18), transparent 45%),
+    radial-gradient(circle at bottom left, rgba(140, 123, 86, 0.12), transparent 50%), var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
 }
@@ -94,6 +96,7 @@ a:focus-visible {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-size: 0.85rem;
+  color: var(--color-accent-strong);
 }
 
 .nav-links {
@@ -104,9 +107,61 @@ a:focus-visible {
   letter-spacing: 0.06em;
 }
 
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  color: var(--color-accent-strong);
+}
+
 .hero {
+  position: relative;
+  overflow: hidden;
   padding: var(--spacing-xl) var(--page-padding) var(--spacing-lg);
-  background: var(--color-bg);
+  background: linear-gradient(160deg, rgba(242, 143, 121, 0.18), rgba(252, 217, 164, 0.35));
+  border-bottom: 1px solid rgba(31, 31, 29, 0.08);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.6), transparent 55%),
+    radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.4), transparent 50%);
+  opacity: 0.9;
+}
+
+.hero-floaters {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: var(--spacing-lg) var(--page-padding) 0;
+  opacity: 0.5;
+}
+
+.hero-floaters span {
+  display: inline-block;
+  animation: float 6s ease-in-out infinite;
+}
+
+.hero-floaters span:nth-child(2) {
+  animation-delay: 1.2s;
+}
+
+.hero-floaters span:nth-child(3) {
+  animation-delay: 2.4s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px) rotate(-4deg);
+  }
 }
 
 .hero-content {
@@ -117,6 +172,8 @@ a:focus-visible {
   gap: var(--spacing-xs);
   text-align: center;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-date {
@@ -124,7 +181,11 @@ a:focus-visible {
   text-transform: uppercase;
   letter-spacing: 0.18em;
   font-size: 0.82rem;
-  color: var(--color-muted);
+  color: var(--color-accent-strong);
+  background: rgba(255, 255, 255, 0.6);
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  box-shadow: 0 8px 20px rgba(242, 143, 121, 0.22);
 }
 
 .hero-title {
@@ -148,6 +209,25 @@ a:focus-visible {
   margin: 0 auto;
   padding: var(--spacing-xl) var(--page-padding);
   border-top: 1px solid rgba(31, 31, 29, 0.08);
+  position: relative;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, rgba(242, 143, 121, 0.05));
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.section:nth-of-type(even)::before {
+  background: linear-gradient(180deg, transparent, rgba(140, 123, 86, 0.06));
+}
+
+.section > * {
+  position: relative;
+  z-index: 1;
 }
 
 .section:first-of-type {
@@ -168,6 +248,9 @@ a:focus-visible {
   font-size: clamp(1.8rem, 4vw, 2.3rem);
   text-transform: lowercase;
   letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .section-header p {
@@ -186,18 +269,19 @@ a:focus-visible {
 .agenda-item,
 .faq-item {
   padding: var(--spacing-md);
-  background: var(--color-surface);
-  border: 1px solid rgba(31, 31, 29, 0.06);
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.7));
+  border: 1px solid rgba(242, 143, 121, 0.15);
   border-radius: var(--radius-md);
-  box-shadow: 0 10px 26px rgba(31, 31, 29, 0.08);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: 0 16px 30px rgba(242, 143, 121, 0.12);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
 }
 
 .detail-card:hover,
 .agenda-item:hover,
 .faq-item:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 32px rgba(31, 31, 29, 0.12);
+  box-shadow: 0 20px 36px rgba(242, 143, 121, 0.16);
+  border-color: rgba(242, 143, 121, 0.4);
 }
 
 .detail-card h3,
@@ -217,6 +301,7 @@ a:focus-visible {
   margin: 0;
   color: var(--color-text);
   font-size: 0.97rem;
+  line-height: 1.7;
 }
 
 .map-wrapper {
@@ -234,13 +319,13 @@ iframe {
 }
 
 form {
-  background: var(--color-surface);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(255, 240, 232, 0.85));
   border-radius: var(--radius-md);
   padding: var(--spacing-lg);
-  border: 1px solid rgba(31, 31, 29, 0.06);
+  border: 1px solid rgba(242, 143, 121, 0.18);
   display: grid;
   gap: var(--spacing-md);
-  box-shadow: 0 14px 30px rgba(31, 31, 29, 0.09);
+  box-shadow: 0 18px 38px rgba(242, 143, 121, 0.15);
 }
 
 .form-group {
@@ -298,26 +383,27 @@ input[type='number']:focus-visible {
 }
 
 .btn.primary {
-  background: var(--color-accent);
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-strong));
   color: #fff;
+  box-shadow: 0 12px 24px rgba(242, 143, 121, 0.28);
 }
 
 .btn.primary:hover,
 .btn.primary:focus-visible {
-  background: var(--color-accent-strong);
-  box-shadow: 0 12px 26px rgba(31, 31, 29, 0.22);
+  background: linear-gradient(135deg, var(--color-accent-strong), #c35b52);
+  box-shadow: 0 16px 30px rgba(216, 114, 103, 0.35);
   transform: translateY(-2px);
 }
 
 .btn.ghost {
-  background: rgba(140, 123, 86, 0.08);
+  background: var(--color-accent-soft);
   border-color: transparent;
   color: var(--color-accent-strong);
 }
 
 .btn.ghost:hover,
 .btn.ghost:focus-visible {
-  background: rgba(140, 123, 86, 0.18);
+  background: rgba(242, 143, 121, 0.2);
   transform: translateY(-2px);
 }
 
@@ -368,6 +454,7 @@ input[type='number']:focus-visible {
 .confirmation-message.visible {
   opacity: 1;
   transform: translateY(0);
+  color: var(--color-accent-strong);
 }
 
 .site-footer {
@@ -429,6 +516,10 @@ input[type='number']:focus-visible {
 
   .hero {
     padding-block: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .hero-floaters {
+    display: none;
   }
 
   form {
