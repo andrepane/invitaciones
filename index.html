@@ -130,6 +130,23 @@
     <p>cintia &amp; andrea · 2026 · nos vemos allí.</p>
   </footer>
 
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js';
+    import { getDatabase, ref, push } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js';
+
+    window.FIREBASE_CONFIG = {
+      apiKey: "…",
+      authDomain: "…",
+      projectId: "boda-f0cac",
+      databaseURL: "https://boda-f0cac-default-rtdb.europe-west1.firebasedatabase.app",
+      storageBucket: "boda-f0cac.appspot.com",
+      appId: "…"
+    };
+
+    const app = initializeApp(window.FIREBASE_CONFIG);
+    window.DB = getDatabase(app);
+    window.firebaseRTDB = { ref, push };
+  </script>
   <script type="module" src="script.js"></script>
 </body>
 </html>
