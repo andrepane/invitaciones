@@ -12,6 +12,7 @@ const { ref, push } = window.firebaseRTDB || {};
 const languageButtons = document.querySelectorAll('.lang-button[data-language]');
 
 
+
 const translations = {
   es: {
     'head.title': 'Cintia & Andrea · sí, nos casamos.',
