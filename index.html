@@ -14,6 +14,8 @@
     <div class="envelope-parallax" data-envelope-parallax>
       <div class="envelope" data-envelope aria-hidden="true">
         <div class="envelope-shadow"></div>
+        <div class="envelope-edge" aria-hidden="true"></div>
+        <div class="envelope-back" aria-hidden="true"></div>
         <div class="envelope-pocket"></div>
         <div class="envelope-letter">
           <div class="letter-card">
@@ -22,7 +24,11 @@
           </div>
         </div>
         <div class="envelope-lid"></div>
-        <div class="envelope-front"></div>
+        <div class="envelope-front" aria-hidden="true">
+          <span class="envelope-fold envelope-fold--left" aria-hidden="true"></span>
+          <span class="envelope-fold envelope-fold--right" aria-hidden="true"></span>
+          <span class="envelope-seal" aria-hidden="true"></span>
+        </div>
       </div>
     </div>
     <button class="envelope-enter" type="button" data-enter-button disabled aria-hidden="true" tabindex="-1" data-i18n="envelope.enter">Entrar</button>
