@@ -9,25 +9,445 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="envelope-locked">
-  <div class="envelope-overlay" data-envelope-overlay role="button" tabindex="0" data-i18n-attr="aria-label:envelope.ariaLabel">
-    <div class="envelope-parallax" data-envelope-parallax>
-      <div class="envelope" data-envelope aria-hidden="true">
-        <div class="envelope-shadow"></div>
-        <div class="envelope-pocket"></div>
-        <div class="envelope-letter">
-          <div class="letter-card">
-            <p class="letter-heading" data-i18n="envelope.letterHeading">Cintia &amp; Andrea</p>
-            <p class="letter-body" data-i18n="envelope.letterBody">Sí, nos casamos.</p>
-          </div>
-        </div>
-        <div class="envelope-lid"></div>
-        <div class="envelope-front"></div>
+<body class="wax-intro-locked">
+  <section id="waxIntro" class="wax-intro" aria-labelledby="inviteTitle">
+    <h1 id="inviteTitle" class="sr-only">Invitación</h1>
+    <div class="wax-intro__center">
+      <button class="wax-seal" id="waxSeal" type="button" aria-label="Abrir invitación" aria-expanded="false">
+        <svg class="wax-seal__svg" viewBox="0 0 320 320" aria-hidden="true" focusable="false">
+          <defs>
+            <radialGradient id="waxGradient" cx="50%" cy="38%" r="65%">
+              <stop offset="0%" stop-color="#f7d6c4" />
+              <stop offset="45%" stop-color="#e5a18a" />
+              <stop offset="100%" stop-color="#c25c49" />
+            </radialGradient>
+            <radialGradient id="waxHighlight" cx="32%" cy="28%" r="55%">
+              <stop offset="0%" stop-color="rgba(255, 255, 255, 0.55)" />
+              <stop offset="100%" stop-color="rgba(255, 255, 255, 0)" />
+            </radialGradient>
+          </defs>
+          <circle cx="160" cy="160" r="140" fill="url(#waxGradient)" />
+          <path d="M64 170c18 58 64 92 96 92s70-20 96-60 20-92-18-120-88-30-118-4-74 34-56 92z" fill="url(#waxHighlight)" />
+          <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="wax-seal__initials">C · A</text>
+        </svg>
+      </button>
+      <p class="helper">Toca o haz clic</p>
+      <div class="reveal" hidden>
+        <h2 class="names"></h2>
+        <p class="subtitle"></p>
+        <button id="enterBtn" class="enter-btn" type="button">Entrar</button>
       </div>
     </div>
-    <button class="envelope-enter" type="button" data-enter-button disabled aria-hidden="true" tabindex="-1" data-i18n="envelope.enter">Entrar</button>
-    <p class="envelope-instruction" data-i18n="envelope.instruction">toca o haz clic para abrir</p>
-  </div>
+  </section>
+  <style>
+    /* --- Wax intro component --- */
+    #waxIntro {
+      --wax-bg: radial-gradient(circle at 40% 30%, rgba(255, 255, 255, 0.85), rgba(248, 242, 235, 0.92) 45%, rgba(242, 234, 226, 0.98) 75%);
+      --wax-surface: #fcf7f1;
+      --wax-text: #3a2a28;
+      --wax-seal-shadow: rgba(103, 40, 34, 0.45);
+      --wax-helper: rgba(58, 42, 40, 0.72);
+      --wax-highlight: rgba(255, 255, 255, 0.7);
+      --wax-melt-duration: 820ms;
+      --wax-reveal-duration: 360ms;
+      --wax-out-duration: 420ms;
+    }
+
+    .wax-intro {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(1.5rem, 7vw, 3rem);
+      background: var(--wax-bg);
+      backdrop-filter: blur(14px);
+      color: var(--wax-text);
+      text-align: center;
+      font-family: var(--font-body, 'Poppins', system-ui, sans-serif);
+      transition: opacity var(--wax-out-duration) ease, visibility var(--wax-out-duration) ease;
+      touch-action: manipulation;
+    }
+
+    .wax-intro.is-dismissed {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .wax-intro__center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(1rem, 4vw, 2.25rem);
+      max-width: 480px;
+      width: min(100%, 420px);
+    }
+
+    .wax-seal {
+      position: relative;
+      width: min(72vw, 280px);
+      aspect-ratio: 1 / 1;
+      padding: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transition: transform 280ms ease, filter 280ms ease;
+      transform: translateZ(0);
+    }
+
+    .wax-seal:focus-visible {
+      outline: 3px solid rgba(255, 255, 255, 0.75);
+      outline-offset: 6px;
+      box-shadow: 0 0 0 4px rgba(107, 52, 46, 0.38);
+    }
+
+    .wax-seal::before {
+      content: '';
+      position: absolute;
+      inset: 14%;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      filter: blur(6px);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .wax-seal::after {
+      content: '';
+      position: absolute;
+      top: 96%;
+      left: 50%;
+      width: clamp(12px, 3vw, 20px);
+      height: clamp(44px, 12vw, 70px);
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(244, 207, 184, 0.92), rgba(199, 92, 73, 0.65));
+      opacity: 0;
+      transform: translate(-50%, -15%) scaleY(0.3);
+      filter: blur(0.8px);
+      pointer-events: none;
+    }
+
+    .wax-seal__svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter:
+        drop-shadow(0 18px 35px rgba(58, 24, 22, 0.3))
+        drop-shadow(0 6px 12px rgba(255, 255, 255, 0.16));
+    }
+
+    .wax-seal__initials {
+      font-family: var(--font-heading, 'Space Grotesk', 'Poppins', sans-serif);
+      font-size: clamp(2.4rem, 8vw, 3.4rem);
+      fill: #fff6f3;
+      letter-spacing: 0.28em;
+      font-weight: 600;
+    }
+
+    .helper {
+      margin: 0;
+      font-size: clamp(1rem, 3.6vw, 1.1rem);
+      color: var(--wax-helper);
+      text-transform: lowercase;
+      transition: opacity 320ms ease;
+    }
+
+    .helper.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .reveal {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(0.65rem, 3vw, 1.1rem);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity var(--wax-reveal-duration) ease, transform var(--wax-reveal-duration) ease;
+    }
+
+    .reveal[hidden] {
+      display: none;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .names {
+      margin: 0;
+      font-family: var(--font-heading, 'Space Grotesk', 'Poppins', sans-serif);
+      font-size: clamp(1.9rem, 7vw, 2.6rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: clamp(1rem, 3.2vw, 1.1rem);
+      color: rgba(58, 42, 40, 0.72);
+    }
+
+    .subtitle[hidden] {
+      display: none;
+    }
+
+    .enter-btn {
+      margin-top: clamp(0.4rem, 2vw, 0.75rem);
+      padding: 0.75rem 1.9rem;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(140deg, #3a2a28, #5d3a35);
+      color: #fdf6f1;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .enter-btn:hover,
+    .enter-btn:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(47, 31, 28, 0.28);
+      outline: none;
+    }
+
+    .enter-btn:active {
+      transform: translateY(1px);
+    }
+
+    .wax-intro.is-revealed .wax-seal {
+      pointer-events: none;
+    }
+
+    .wax-intro.is-revealed .wax-seal,
+    .wax-intro.is-revealed .wax-seal__svg {
+      opacity: 0;
+      transition: opacity 240ms ease;
+    }
+
+    .wax-intro.is-revealed .helper {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .wax-intro.is-melting .wax-seal {
+      animation: waxMelt var(--wax-melt-duration) forwards cubic-bezier(0.45, 0.05, 0.2, 0.99);
+    }
+
+    .wax-intro.is-melting .wax-seal::after {
+      animation: waxDrip var(--wax-melt-duration) forwards ease-in;
+    }
+
+    @keyframes waxMelt {
+      0% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+      40% {
+        transform: scale(1.05, 0.94) translateY(6px);
+      }
+      70% {
+        transform: scale(1.08, 0.88) translateY(18px);
+      }
+      100% {
+        transform: scale(1.12, 0.66) translateY(120px);
+        opacity: 0;
+      }
+    }
+
+    @keyframes waxDrip {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -15%) scaleY(0.3);
+      }
+      30% {
+        opacity: 1;
+        transform: translate(-50%, 15%) scaleY(0.8);
+      }
+      65% {
+        opacity: 1;
+        transform: translate(-50%, 60%) scale(0.9, 1.05);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, 130%) scale(0.45, 1.2);
+      }
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (min-width: 720px) {
+      .wax-intro__center {
+        max-width: 520px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .wax-intro,
+      .wax-seal,
+      .reveal,
+      .enter-btn {
+        transition-duration: 0.01ms;
+        animation-duration: 0.01ms !important;
+      }
+
+      .wax-intro.is-melting .wax-seal,
+      .wax-intro.is-melting .wax-seal::after {
+        animation: none;
+      }
+    }
+  </style>
+  <script>
+    // --- Wax intro component behaviour ---
+    const COUPLE_NAMES = "Cintia & Andrea";
+    const SUBTITLE = "Vera (Almería) — 28 · 06 · 2026";
+    const DESTINATION = "/";
+
+    (function initWaxIntro() {
+      const waxIntro = document.getElementById('waxIntro');
+      const waxSeal = document.getElementById('waxSeal');
+      const helper = waxIntro?.querySelector('.helper');
+      const revealBlock = waxIntro?.querySelector('.reveal');
+      const namesEl = waxIntro?.querySelector('.names');
+      const subtitleEl = waxIntro?.querySelector('.subtitle');
+      const enterBtn = document.getElementById('enterBtn');
+      if (!waxIntro || !waxSeal || !revealBlock || !namesEl || !enterBtn) {
+        document.body.classList.remove('wax-intro-locked');
+        return;
+      }
+
+      enterBtn.disabled = true;
+
+      const motionMedia = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+      let prefersReducedMotion = motionMedia?.matches ?? false;
+
+      motionMedia?.addEventListener('change', (event) => {
+        prefersReducedMotion = event.matches;
+      });
+
+      namesEl.textContent = COUPLE_NAMES;
+      if (subtitleEl) {
+        if (SUBTITLE) {
+          subtitleEl.textContent = SUBTITLE;
+          subtitleEl.hidden = false;
+        } else {
+          subtitleEl.hidden = true;
+        }
+      }
+
+      let isAnimating = false;
+      let isRevealed = false;
+
+      const hideHelper = () => {
+        if (!helper) return;
+        helper.classList.add('is-hidden');
+        helper.setAttribute('aria-hidden', 'true');
+      };
+
+      const focusEnter = () => {
+        window.requestAnimationFrame(() => {
+          enterBtn.focus({ preventScroll: true });
+        });
+      };
+
+      const reveal = () => {
+        if (isRevealed) return;
+        isRevealed = true;
+        waxIntro.classList.add('is-revealed');
+        waxIntro.classList.remove('is-melting');
+        waxSeal.disabled = true;
+        waxSeal.setAttribute('aria-expanded', 'true');
+        hideHelper();
+        revealBlock.hidden = false;
+        requestAnimationFrame(() => {
+          revealBlock.classList.add('is-visible');
+        });
+        enterBtn.disabled = false;
+        focusEnter();
+        isAnimating = false;
+      };
+
+      const startMelt = () => {
+        if (isAnimating || isRevealed) return;
+        isAnimating = true;
+        waxIntro.classList.add('is-melting');
+        hideHelper();
+
+        if (prefersReducedMotion) {
+          reveal();
+          return;
+        }
+
+        const handleAnimationEnd = (event) => {
+          if (event.target !== waxSeal || event.animationName !== 'waxMelt') return;
+          waxIntro.removeEventListener('animationend', handleAnimationEnd);
+          reveal();
+        };
+
+        waxIntro.addEventListener('animationend', handleAnimationEnd);
+      };
+
+      const dismissIntro = () => {
+        waxIntro.classList.add('is-dismissed');
+        waxIntro.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('wax-intro-locked');
+        window.setTimeout(() => {
+          waxIntro.remove();
+        }, 480);
+      };
+
+      const navigate = () => {
+        if (!DESTINATION) {
+          dismissIntro();
+          return;
+        }
+
+        if (DESTINATION.startsWith('#')) {
+          const target = document.querySelector(DESTINATION);
+          if (target) {
+            target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+            dismissIntro();
+            return;
+          }
+        }
+
+        dismissIntro();
+        window.location.assign(DESTINATION);
+      };
+
+      waxSeal.addEventListener('click', startMelt);
+      waxSeal.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          startMelt();
+        }
+      });
+
+      enterBtn.addEventListener('click', navigate);
+
+      window.requestAnimationFrame(() => {
+        waxSeal.focus({ preventScroll: true });
+      });
+    })();
+  </script>
   <nav class="site-nav" aria-label="Secciones de la invitación" data-i18n-attr="aria-label:nav.ariaLabel">
     <div class="nav-container">
       <span class="nav-brand">Cintia &amp; Andrea</span>
