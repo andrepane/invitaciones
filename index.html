@@ -6,18 +6,26 @@
   <title>Cintia &amp; Andrea · sí, nos casamos.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="envelope-locked">
   <div class="envelope-overlay" data-envelope-overlay role="button" tabindex="0" data-i18n-attr="aria-label:envelope.ariaLabel">
-    <div class="envelope" aria-hidden="true">
-      <div class="envelope-flap"></div>
-      <div class="envelope-letter">
-        <p data-i18n="envelope.letter">abre la invitación</p>
+    <div class="envelope-parallax" data-envelope-parallax>
+      <div class="envelope" data-envelope aria-hidden="true">
+        <div class="envelope-shadow"></div>
+        <div class="envelope-pocket"></div>
+        <div class="envelope-letter">
+          <div class="letter-card">
+            <p class="letter-heading" data-i18n="envelope.letterHeading">Cintia &amp; Andrea</p>
+            <p class="letter-body" data-i18n="envelope.letterBody">Sí, nos casamos.</p>
+          </div>
+        </div>
+        <div class="envelope-lid"></div>
+        <div class="envelope-front"></div>
       </div>
-      <div class="envelope-body"></div>
     </div>
+    <button class="envelope-enter" type="button" data-enter-button disabled aria-hidden="true" tabindex="-1" data-i18n="envelope.enter">Entrar</button>
     <p class="envelope-instruction" data-i18n="envelope.instruction">toca o haz clic para abrir</p>
   </div>
   <nav class="site-nav" aria-label="Secciones de la invitación" data-i18n-attr="aria-label:nav.ariaLabel">
@@ -142,7 +150,7 @@
   window.DB = getDatabase(app);
   window.firebaseRTDB = { ref, push };
 </script>
-<script type="module" src="script.js"></script>
+<script type="module" src="app.js"></script>
 
 </body>
 </html>

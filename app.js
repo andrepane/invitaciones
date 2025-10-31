@@ -12,32 +12,98 @@ const { ref, push } = window.firebaseRTDB || {};
 const languageButtons = document.querySelectorAll('.lang-button[data-language]');
 
 const envelopeOverlay = document.querySelector('[data-envelope-overlay]');
+const envelopeParallax = envelopeOverlay?.querySelector('[data-envelope-parallax]');
+const enterButton = envelopeOverlay?.querySelector('[data-enter-button]');
 const prefersReducedMotion = window.matchMedia
   ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
   : false;
+const pointerFineQuery = window.matchMedia ? window.matchMedia('(pointer: fine)') : null;
 
 if (envelopeOverlay) {
   let envelopeOpened = false;
+  let parallaxFrame = null;
+  const parallaxEnabled = !prefersReducedMotion && Boolean(pointerFineQuery?.matches);
 
-  const openEnvelope = () => {
-    if (envelopeOpened) return;
-    envelopeOpened = true;
-    envelopeOverlay.classList.add('is-opening');
-    document.body.classList.remove('envelope-locked');
-    const dismissDelay = prefersReducedMotion ? 0 : 900;
-    const removeDelay = prefersReducedMotion ? 0 : 1600;
-
-    window.setTimeout(() => {
-      envelopeOverlay.classList.add('is-dismissed');
-      envelopeOverlay.setAttribute('aria-hidden', 'true');
-    }, dismissDelay);
-
-    window.setTimeout(() => {
-      envelopeOverlay.remove();
-    }, removeDelay);
+  const enableEnterButton = () => {
+    if (!enterButton) return;
+    enterButton.disabled = false;
+    enterButton.removeAttribute('aria-hidden');
+    enterButton.removeAttribute('tabindex');
   };
 
-  envelopeOverlay.addEventListener('click', openEnvelope);
+  const focusEnterButton = () => {
+    if (!enterButton || enterButton.disabled) return;
+    enterButton.focus({ preventScroll: true });
+  };
+
+  const resetParallax = () => {
+    if (!envelopeParallax) return;
+    envelopeParallax.style.setProperty('--parallax-rotate-x', '0deg');
+    envelopeParallax.style.setProperty('--parallax-rotate-y', '0deg');
+    envelopeParallax.style.setProperty('--parallax-translate', '0px');
+    parallaxFrame = null;
+  };
+
+  const handleParallax = (event) => {
+    if (!parallaxEnabled || !envelopeParallax) return;
+    const bounds = envelopeParallax.getBoundingClientRect();
+    const offsetX = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const offsetY = (event.clientY - bounds.top) / bounds.height - 0.5;
+
+    const rotateX = (-offsetY * 6).toFixed(2);
+    const rotateY = (offsetX * 6).toFixed(2);
+    const translate = (-offsetY * 14).toFixed(2);
+
+    if (parallaxFrame) {
+      window.cancelAnimationFrame(parallaxFrame);
+    }
+
+    parallaxFrame = window.requestAnimationFrame(() => {
+      envelopeParallax.style.setProperty('--parallax-rotate-x', `${rotateX}deg`);
+      envelopeParallax.style.setProperty('--parallax-rotate-y', `${rotateY}deg`);
+      envelopeParallax.style.setProperty('--parallax-translate', `${translate}px`);
+      parallaxFrame = null;
+    });
+  };
+
+  const openEnvelope = ({ instant = false } = {}) => {
+    if (envelopeOpened) return;
+    envelopeOpened = true;
+    envelopeOverlay.classList.add('is-opening', 'is-open');
+    envelopeOverlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.remove('envelope-locked');
+
+    if (instant) {
+      enableEnterButton();
+      window.requestAnimationFrame(focusEnterButton);
+      return;
+    }
+
+    window.setTimeout(() => {
+      enableEnterButton();
+    }, 560);
+
+    window.setTimeout(() => {
+      focusEnterButton();
+    }, 900);
+  };
+
+  const dismissOverlay = () => {
+    envelopeOverlay.classList.add('is-dismissed');
+    envelopeOverlay.setAttribute('aria-hidden', 'true');
+    resetParallax();
+    window.setTimeout(() => {
+      envelopeOverlay.remove();
+    }, 480);
+  };
+
+  envelopeOverlay.addEventListener('click', (event) => {
+    if (event.target instanceof HTMLElement && event.target.closest('[data-enter-button]')) {
+      return;
+    }
+    openEnvelope();
+  });
+
   envelopeOverlay.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -45,11 +111,33 @@ if (envelopeOverlay) {
     }
   });
 
+  if (enterButton) {
+    enterButton.setAttribute('aria-hidden', 'true');
+    enterButton.setAttribute('tabindex', '-1');
+    enterButton.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const targetSection = document.querySelector('#inicio');
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+      }
+      dismissOverlay();
+    });
+  }
+
+  if (parallaxEnabled && envelopeOverlay) {
+    envelopeOverlay.addEventListener('mousemove', handleParallax);
+    envelopeOverlay.addEventListener('mouseleave', resetParallax);
+  }
+
+  const focusTarget = prefersReducedMotion && enterButton ? enterButton : envelopeOverlay;
+
   window.setTimeout(() => {
-    if (typeof envelopeOverlay.focus === 'function') {
-      envelopeOverlay.focus({ preventScroll: true });
-    }
+    focusTarget?.focus({ preventScroll: true });
   }, prefersReducedMotion ? 0 : 200);
+
+  if (prefersReducedMotion) {
+    openEnvelope({ instant: true });
+  }
 }
 
 const translations = {
@@ -102,7 +190,10 @@ const translations = {
     'messages.firebaseUnavailable': 'Firebase RTDB no está disponible.',
     'envelope.instruction': 'toca o haz clic para abrir',
     'envelope.ariaLabel': 'Abrir invitación',
-    'envelope.letter': 'abre la invitación'
+    'envelope.letter': 'abre la invitación',
+    'envelope.letterHeading': 'Cintia & Andrea',
+    'envelope.letterBody': 'Sí, nos casamos.',
+    'envelope.enter': 'Entrar'
   },
   it: {
     'head.title': 'Cintia & Andrea · sì, ci sposiamo.',
@@ -153,7 +244,10 @@ const translations = {
     'messages.firebaseUnavailable': 'Firebase RTDB non è disponibile.',
     'envelope.instruction': 'tocca o fai clic per aprire',
     'envelope.ariaLabel': "Apri l'invito",
-    'envelope.letter': "apri l'invito"
+    'envelope.letter': "apri l'invito",
+    'envelope.letterHeading': 'Cintia & Andrea',
+    'envelope.letterBody': 'Sì, ci sposiamo.',
+    'envelope.enter': 'Entra'
   }
 };
 
