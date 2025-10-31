@@ -136,22 +136,78 @@ body:not(.envelope-locked) .site-footer {
   position: absolute;
   inset: 18% 6% 6%;
   border-radius: 24px;
-  filter: blur(22px);
+  filter: blur(26px);
   background: var(--envelope-shadow);
-  opacity: 0.55;
-  transform: translateY(18px);
+  opacity: 0.6;
+  transform: translate3d(0, 22px, -12px);
   z-index: 0;
+}
+
+.envelope-back {
+  position: absolute;
+  inset: 14% 6% 10%;
+  border-radius: 22px;
+  background:
+    linear-gradient(160deg, rgba(249, 229, 200, 0.95), rgba(229, 202, 164, 0.98)),
+    radial-gradient(circle at 30% 18%, rgba(255, 255, 255, 0.55), transparent 58%);
+  box-shadow:
+    inset 0 0 0 1px rgba(201, 168, 106, 0.32),
+    inset 0 -26px 42px rgba(201, 168, 106, 0.18),
+    0 30px 40px rgba(42, 42, 42, 0.12);
+  z-index: 1;
+  transform: translateZ(-6px);
+}
+
+.envelope-side {
+  position: absolute;
+  top: 26%;
+  bottom: 14%;
+  width: 16%;
+  border-radius: 18px;
+  background: linear-gradient(90deg, rgba(186, 148, 92, 0.38), rgba(255, 245, 233, 0.1));
+  mix-blend-mode: multiply;
+  filter: blur(0.2px);
+  z-index: 2;
+}
+
+.envelope-side-left {
+  left: 5.5%;
+  clip-path: polygon(0 0, 100% 12%, 100% 88%, 0 100%);
+}
+
+.envelope-side-right {
+  right: 5.5%;
+  clip-path: polygon(0 12%, 100% 0, 100% 100%, 0 88%);
+  background: linear-gradient(270deg, rgba(186, 148, 92, 0.4), rgba(255, 245, 233, 0.1));
+}
+
+.envelope-bottom {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+  height: 18%;
+  border-radius: 0 0 18px 18px;
+  clip-path: polygon(0 0, 12% 10%, 88% 10%, 100% 0, 100% 100%, 0 100%);
+  background:
+    linear-gradient(0deg, rgba(176, 137, 80, 0.55), rgba(249, 229, 200, 0));
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+  z-index: 2;
+  transform: translateZ(-2px);
 }
 
 .envelope-pocket {
   position: absolute;
   inset: 18% 6% 12%;
   border-radius: 18px;
-  background: linear-gradient(165deg, rgba(255, 245, 233, 0.95), rgba(240, 218, 186, 0.9));
+  background:
+    linear-gradient(165deg, rgba(255, 245, 233, 0.98), rgba(240, 218, 186, 0.95)),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0 1px, rgba(255, 255, 255, 0) 1px 5px);
   box-shadow:
     inset 0 0 0 1px rgba(201, 168, 106, 0.38),
-    inset 0 10px 18px rgba(255, 255, 255, 0.45);
-  z-index: 1;
+    inset 0 10px 18px rgba(255, 255, 255, 0.5);
+  z-index: 3;
   overflow: hidden;
 }
 
@@ -172,7 +228,7 @@ body:not(.envelope-locked) .site-footer {
   background: transparent;
   transform: translate3d(0, 38%, 0);
   opacity: 0;
-  z-index: 2;
+  z-index: 4;
   transition:
     transform 0.7s cubic-bezier(0.32, 0.72, 0, 1) 0s,
     opacity 0.4s ease 0s;
@@ -211,33 +267,56 @@ body:not(.envelope-locked) .site-footer {
   left: 6%;
   right: 6%;
   height: 46%;
-  background: linear-gradient(160deg, rgba(249, 229, 200, 1), rgba(228, 199, 156, 0.95));
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
   transform-origin: top center;
   transform: rotateX(0deg);
-  box-shadow: inset 0 -1px 0 rgba(201, 168, 106, 0.45);
+  perspective: 1200px;
+  z-index: 6;
   transition: transform 0.55s cubic-bezier(0.45, 0.05, 0.15, 0.95);
-  z-index: 4;
+}
+
+.envelope-lid-inner {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(160deg, rgba(249, 229, 200, 1), rgba(228, 199, 156, 0.95));
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  border-radius: 16px 16px 6px 6px;
+  box-shadow:
+    inset 0 -1px 0 rgba(201, 168, 106, 0.48),
+    inset 0 -24px 34px rgba(201, 168, 106, 0.2);
+  overflow: hidden;
+}
+
+.envelope-lid-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0) 70%);
+  mix-blend-mode: screen;
 }
 
 .envelope-front {
   position: absolute;
   inset: 34% 6% 10%;
-  background: linear-gradient(180deg, rgba(249, 229, 200, 0.96), rgba(231, 205, 167, 0.98));
+  background:
+    linear-gradient(180deg, rgba(249, 229, 200, 0.98), rgba(231, 205, 167, 0.99));
   clip-path: polygon(0 22%, 50% 0, 100% 22%, 100% 100%, 0 100%);
   border-radius: 0 0 18px 18px;
   box-shadow:
     inset 0 0 0 1px rgba(201, 168, 106, 0.38),
-    inset 0 18px 18px rgba(255, 255, 255, 0.35);
-  z-index: 3;
+    inset 0 18px 24px rgba(255, 255, 255, 0.4);
+  z-index: 5;
+  overflow: hidden;
 }
 
-.envelope-front::before {
-  content: '';
+.envelope-front-highlight {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
-  opacity: 0.6;
+  inset: 4% 4% 8%;
+  border-radius: 0 0 16px 16px;
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 70%);
+  opacity: 0.9;
+  pointer-events: none;
 }
 
 .envelope-front::after {
@@ -249,6 +328,37 @@ body:not(.envelope-locked) .site-footer {
   height: 58%;
   background: rgba(201, 168, 106, 0.35);
   transform: translateX(-50%);
+}
+
+.envelope-seal {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  width: clamp(38px, 12vw, 54px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 245, 233, 0.9), rgba(186, 148, 92, 0.85) 65%),
+    linear-gradient(160deg, rgba(184, 146, 90, 0.85), rgba(201, 168, 106, 0.95));
+  border: 1px solid rgba(201, 168, 106, 0.55);
+  box-shadow:
+    inset 0 6px 12px rgba(255, 255, 255, 0.35),
+    inset 0 -8px 18px rgba(149, 114, 65, 0.32),
+    0 12px 24px rgba(42, 42, 42, 0.22);
+  transform: translate3d(-50%, -50%, 40px);
+  z-index: 7;
+  transition: transform 0.55s cubic-bezier(0.45, 0.05, 0.15, 0.95),
+    box-shadow 0.55s ease,
+    opacity 0.45s ease;
+}
+
+.envelope-seal::after {
+  content: '';
+  position: absolute;
+  inset: 28%;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.6);
+  opacity: 0.6;
 }
 
 .envelope-instruction {
@@ -294,11 +404,24 @@ body:not(.envelope-locked) .site-footer {
   transform: rotateX(-132deg);
 }
 
+.envelope-overlay.is-open .envelope-lid-inner::after {
+  opacity: 0.4;
+}
+
 .envelope-overlay.is-open .envelope-letter {
   transform: translate3d(0, -16%, 0);
   opacity: 1;
   transition-delay: 0.28s, 0.58s;
-  z-index: 5;
+  z-index: 6;
+}
+
+.envelope-overlay.is-open .envelope-seal {
+  transform: translate3d(-50%, -50%, 40px) scale(0.94);
+  opacity: 0;
+  box-shadow:
+    inset 0 6px 12px rgba(255, 255, 255, 0.4),
+    inset 0 -8px 18px rgba(149, 114, 65, 0.26),
+    0 10px 18px rgba(42, 42, 42, 0.18);
 }
 
 .envelope-overlay.is-open .envelope-enter {
