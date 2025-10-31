@@ -9,8 +9,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<nav class="site-nav" aria-label="Secciones de la invitación" data-i18n-attr="aria-label:nav.ariaLabel">
+<body class="envelope-locked">
+  <div class="envelope-overlay" data-envelope-overlay role="button" tabindex="0" data-i18n-attr="aria-label:envelope.ariaLabel">
+    <div class="envelope" aria-hidden="true">
+      <div class="envelope-flap"></div>
+      <div class="envelope-letter">
+        <p data-i18n="envelope.letter">abre la invitación</p>
+      </div>
+      <div class="envelope-body"></div>
+    </div>
+    <p class="envelope-instruction" data-i18n="envelope.instruction">toca o haz clic para abrir</p>
+  </div>
+  <nav class="site-nav" aria-label="Secciones de la invitación" data-i18n-attr="aria-label:nav.ariaLabel">
     <div class="nav-container">
       <span class="nav-brand">Cintia &amp; Andrea</span>
       <div class="nav-actions">

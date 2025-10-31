@@ -11,6 +11,47 @@ const database = window.DB;
 const { ref, push } = window.firebaseRTDB || {};
 const languageButtons = document.querySelectorAll('.lang-button[data-language]');
 
+const envelopeOverlay = document.querySelector('[data-envelope-overlay]');
+const prefersReducedMotion = window.matchMedia
+  ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  : false;
+
+if (envelopeOverlay) {
+  let envelopeOpened = false;
+
+  const openEnvelope = () => {
+    if (envelopeOpened) return;
+    envelopeOpened = true;
+    envelopeOverlay.classList.add('is-opening');
+    document.body.classList.remove('envelope-locked');
+    const dismissDelay = prefersReducedMotion ? 0 : 900;
+    const removeDelay = prefersReducedMotion ? 0 : 1600;
+
+    window.setTimeout(() => {
+      envelopeOverlay.classList.add('is-dismissed');
+      envelopeOverlay.setAttribute('aria-hidden', 'true');
+    }, dismissDelay);
+
+    window.setTimeout(() => {
+      envelopeOverlay.remove();
+    }, removeDelay);
+  };
+
+  envelopeOverlay.addEventListener('click', openEnvelope);
+  envelopeOverlay.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openEnvelope();
+    }
+  });
+
+  window.setTimeout(() => {
+    if (typeof envelopeOverlay.focus === 'function') {
+      envelopeOverlay.focus({ preventScroll: true });
+    }
+  }, prefersReducedMotion ? 0 : 200);
+}
+
 const translations = {
   es: {
     'head.title': 'Cintia & Andrea · sí, nos casamos.',
@@ -58,7 +99,10 @@ const translations = {
     'messages.thankYouNo': 'Una pena, te echaremos de menos.',
     'messages.saveError': 'No hemos podido guardar tu respuesta. Por favor, inténtalo de nuevo dentro de un momento.',
     'messages.responseExists': 'Ya tenemos tu respuesta registrada. ¡Gracias!',
-    'messages.firebaseUnavailable': 'Firebase RTDB no está disponible.'
+    'messages.firebaseUnavailable': 'Firebase RTDB no está disponible.',
+    'envelope.instruction': 'toca o haz clic para abrir',
+    'envelope.ariaLabel': 'Abrir invitación',
+    'envelope.letter': 'abre la invitación'
   },
   it: {
     'head.title': 'Cintia & Andrea · sì, ci sposiamo.',
@@ -106,7 +150,10 @@ const translations = {
     'messages.thankYouNo': 'Che peccato, ci mancherai.',
     'messages.saveError': 'Non siamo riusciti a salvare la tua risposta. Riprova tra qualche istante.',
     'messages.responseExists': 'Abbiamo già registrato la tua risposta. Grazie!',
-    'messages.firebaseUnavailable': 'Firebase RTDB non è disponibile.'
+    'messages.firebaseUnavailable': 'Firebase RTDB non è disponibile.',
+    'envelope.instruction': 'tocca o fai clic per aprire',
+    'envelope.ariaLabel': "Apri l'invito",
+    'envelope.letter': "apri l'invito"
   }
 };
 
