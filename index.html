@@ -1,148 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cintia &amp; Andrea · sí, nos casamos.</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invitación Cintia &amp; Andrea</title>
+  <meta name="description" content="Invitación de boda de Cintia y Andrea" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="envelope-locked">
-  <div class="envelope-overlay" data-envelope-overlay role="button" tabindex="0" data-i18n-attr="aria-label:envelope.ariaLabel">
-    <div class="envelope" aria-hidden="true">
-      <div class="envelope-flap"></div>
-      <div class="envelope-letter">
-        <p data-i18n="envelope.letter">abre la invitación</p>
-      </div>
-      <div class="envelope-body"></div>
-    </div>
-    <p class="envelope-instruction" data-i18n="envelope.instruction">toca o haz clic para abrir</p>
-  </div>
-  <nav class="site-nav" aria-label="Secciones de la invitación" data-i18n-attr="aria-label:nav.ariaLabel">
-    <div class="nav-container">
-      <span class="nav-brand">Cintia &amp; Andrea</span>
-      <div class="nav-actions">
-        <div class="nav-links">
-          <a href="#detalles" data-i18n="nav.details">detalles</a>
-          <a href="#agenda" data-i18n="nav.agenda">agenda</a>
-          <a href="#rsvp" data-i18n="nav.rsvp">formulario</a>
+<body>
+  <noscript>
+    <main class="hero hero--noscript">
+      <section class="envelope envelope--noscript" aria-hidden="true">
+        <div class="envelope__body" data-state="open">
+          <div class="envelope__back"></div>
+          <div class="envelope__front"></div>
+          <div class="envelope__flap"></div>
+          <div class="envelope__letter">
+            <header class="letter__header">
+              <h1>Cintia &amp; Andrea</h1>
+              <p>5 septiembre 2026 · Granada</p>
+            </header>
+            <a class="btn btn--primary" href="#inicio">Entrar</a>
+          </div>
         </div>
-        <div class="language-switcher" role="group" aria-label="Selecciona idioma" data-i18n-attr="aria-label:language.switchAria">
-          <button type="button" class="lang-button is-active" data-language="es" aria-pressed="true">ES</button>
-          <button type="button" class="lang-button" data-language="it" aria-pressed="false">IT</button>
+      </section>
+    </main>
+  </noscript>
+
+  <main id="hero" class="hero">
+    <div id="a11yStatus" aria-live="polite" class="sr-only"></div>
+    <section class="envelope" id="envelope" role="button" tabindex="0" aria-label="Abrir invitación" data-state="closed">
+      <div class="envelope__body">
+        <div class="envelope__front" aria-hidden="true"></div>
+        <div class="envelope__back" aria-hidden="true"></div>
+        <div class="envelope__flap" aria-hidden="true"></div>
+        <div class="envelope__letter">
+          <header class="letter__header">
+            <h1>Cintia &amp; Andrea</h1>
+            <p>5 septiembre 2026 · Granada</p>
+          </header>
+          <button id="enterBtn" type="button" class="btn btn--primary" hidden>Entrar</button>
         </div>
-      </div>
-    </div>
-  </nav>
-
-  <header class="hero" id="inicio">
-    <div class="hero-content">
-      <p class="hero-date" data-i18n="hero.date">5 · septiembre · 2026 · vera, almería</p>
-      <h1 class="hero-title" data-i18n="hero.title">El anti-Bodorrio</h1>
-      <p class="hero-sub" data-i18n="hero.subtitle">Cero artificios, todo lujo (y buena comida).</p>
-    </div>
-  </header>
-
-  <main>
-    <section id="detalles" class="section">
-      <div class="section-header">
-        <h2 data-i18n="details.title">detalles prácticos</h2>
-        <p data-i18n="details.subtitle">todo lo necesario para llegar puntuales (un día antes).</p>
-      </div>
-      <div class="details-grid">
-        <article class="detail-card">
-          <h3 data-i18n="details.when.title">cuándo</h3>
-          <p data-i18n="details.when.body">Del 4 al 6 de septiembre de 2026. La ceremonia es el sábado a partir de las 18:00.</p>
-        </article>
-        <article class="detail-card">
-          <h3 data-i18n="details.where.title">dónde</h3>
-          <p data-i18n="details.where.body">Cortijo Media Legua · Vera, Almería.</p>
-          <p data-i18n="details.where.extra">Grandes habitaciones, piscina privada y hasta pista de pádel.</p>
-        </article>
-        <article class="detail-card">
-          <h3 data-i18n="details.what.title">qué llevar</h3>
-          <p data-i18n="details.what.body">Bañador, ropa ligera para el día y algo más formal para la noche.</p>
-        </article>
-      </div>
-      <div class="map-wrapper" aria-label="Mapa de la localización" data-i18n-attr="aria-label:map.ariaLabel">
-        <iframe title="Mapa de Cortijo Media Legua" data-i18n-attr="title:map.title" src="https://www.google.com/maps?q=Cortijo%20Media%20Legua&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <svg class="paper-texture" aria-hidden="true" focusable="false" width="0" height="0">
+          <defs>
+            <filter id="paperTexture" x="0" y="0" width="1" height="1">
+              <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="12" result="noise" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0.95  0 0 0 0 0.92  0 0 0 0 0.82  0 0 0 0.18 0" result="softNoise" />
+              <feBlend in="SourceGraphic" in2="softNoise" mode="multiply" />
+            </filter>
+            <pattern id="paperGrain" patternUnits="objectBoundingBox" width="0.1" height="0.1">
+              <rect width="100%" height="100%" fill="rgba(255,255,255,0.04)"></rect>
+              <circle cx="0.25" cy="0.35" r="0.02" fill="rgba(0,0,0,0.04)"></circle>
+              <circle cx="0.72" cy="0.65" r="0.015" fill="rgba(0,0,0,0.03)"></circle>
+            </pattern>
+          </defs>
+        </svg>
       </div>
     </section>
-
-    <section id="agenda" class="section">
-      <div class="section-header">
-        <h2 data-i18n="agenda.title">agenda del fin de semana</h2>
-      </div>
-      <div class="agenda-grid">
-        <article class="agenda-item">
-          <h3 data-i18n="agenda.friday.title">viernes</h3>
-          <p data-i18n="agenda.friday.body">Check-in desde las 15:00. Cena en compañía y sobremesa para ponernos al día.</p>
-        </article>
-        <article class="agenda-item">
-          <h3 data-i18n="agenda.saturday.title">sábado</h3>
-          <p data-i18n="agenda.saturday.body">Mañana entre piscina y preparativos. A las 18:00 pequeña ceremonia en familia. Después cena y música.</p>
-        </article>
-        <article class="agenda-item">
-          <h3 data-i18n="agenda.sunday.title">domingo</h3>
-          <p data-i18n="agenda.sunday.body">Desayuno tranquilo, despedidas y salida a las 11:00.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="rsvp" class="section">
-      <div class="section-header">
-        <h2 data-i18n="form.title">asistencia</h2>
-        <p data-i18n="form.description">¿vienes? dilo aquí y te guardamos sitio.</p>
-      </div>
-      <form id="rsvp-form" novalidate>
-        <div class="form-group">
-          <label for="name" data-i18n="form.labels.name">nombre</label>
-          <input type="text" id="name" name="name" autocomplete="name" required>
-        </div>
-        <div class="form-group">
-          <label for="guests" data-i18n="form.labels.guests">Número Personas</label>
-          <input type="number" id="guests" name="guests" min="1" max="6" inputmode="numeric" required>
-        </div>
-        <input type="hidden" id="attendance" name="attendance">
-        <div class="form-actions">
-          <button type="submit" class="btn primary" data-response="yes" data-i18n="form.buttons.confirm">confirmar asistencia</button>
-          <button type="submit" class="btn ghost" data-response="no" data-i18n="form.buttons.decline">no puedo</button>
-        </div>
-        <p id="confirmation-message" class="confirmation-message" role="status" aria-live="polite"></p>
-        <button type="button" id="reset-response" class="btn link" data-skip-disable="true" hidden data-i18n="form.buttons.reset">
-          editar respuesta
-        </button>
-      </form>
-    </section>
-
-
   </main>
 
-  <footer class="site-footer">
-    <p data-i18n="footer.text">cintia &amp; andrea · 2026 · nos vemos allí.</p>
-  </footer>
+  <section id="inicio" class="content">
+    <div class="content__inner">
+      <h2>Bienvenidos a nuestra historia</h2>
+      <p>
+        Aquí comienza el resto de la invitación. Desplázate para descubrir los detalles del gran día,
+        el programa y toda la información que necesitas para acompañarnos.
+      </p>
+    </div>
+  </section>
 
-<script type="module">
-  import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js';
-  import { getDatabase, ref, push } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js';
-
-  window.firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "boda-f0cac.firebaseapp.com",
-    projectId: "boda-f0cac",
-    databaseURL: "https://boda-f0cac-default-rtdb.europe-west1.firebasedatabase.app",
-    storageBucket: "boda-f0cac.appspot.com",
-    messagingSenderId: "764003731377",
-    appId: "1:764003731377:web:XXXXXXXXXXXXX"
-  };
-
-  const app = initializeApp(window.firebaseConfig);
-  window.DB = getDatabase(app);
-  window.firebaseRTDB = { ref, push };
-</script>
-<script type="module" src="script.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-Y6byN6D+PfYZ7RUTpujISiFDUFxIr05oig3NbS1Ry6j3TDIrS9KuX3sI5OGucs5cjox96D65gis6pZeRAEIJ5g==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+  <script src="app.js" defer></script>
 </body>
 </html>
